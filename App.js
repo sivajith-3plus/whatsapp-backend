@@ -35,13 +35,20 @@ io.on("connection", (socket) => {
   console.log("connected to socket.io", socket.id);
   socket.on("send_message", (data) => {
     console.log(data);
-    socket.emit("receive_message", data);
+    io.emit("receive_message", data);
   });
+  socket.on('onChat', () => {
+    console.log('socket onchat');
+    socket.emit('msgSeen');
+  })
+  socket.on('delete chat',()=>{
+    io.emit('chat deleted')
+  })
 });
 
 server.listen(port, () => {
   connectDB()
-    .then(() => console.log("server started at port", port))
+    .then(() => console.log("server started at port", port, 'and DB connected'))
     .catch((err) => console.log("DB connection failed", err));
 });
- 
+       
