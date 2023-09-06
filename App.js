@@ -44,6 +44,12 @@ io.on("connection", (socket) => {
   socket.on('delete chat',()=>{
     io.emit('chat deleted')
   })
+  socket.on('unblock',(id)=>{
+    io.emit('unblocked',id)
+  })
+  socket.on('block',(id)=>{
+    io.emit('blocked',id)
+  })
 });
 
 server.listen(port, () => {

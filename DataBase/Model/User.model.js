@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   },
   isOnline: {
     type: Boolean,
-    default:false,
+    default: false,
     required: true,
   },
   profilePic: {
@@ -26,6 +26,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  blockedUsers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
+  ],
 });
 
 userSchema.statics.findPhone = async function ({ phoneNumber }) {

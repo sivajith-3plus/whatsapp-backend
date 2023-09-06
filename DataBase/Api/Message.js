@@ -59,11 +59,10 @@ router.patch("/updateSeen/:messageId", async (req, res) => {
   try {
     const { messageId } = req.params;
 
-    // Find the message by ID and update 'isSeen'
     const message = await MessageModel.findByIdAndUpdate(
       messageId,
-      { isSeen: true },
-      { new: true } // Return the updated message
+      { isSeen: true, timeOfSeen: new Date() },
+      { new: true }
     );
 
     if (!message) {
@@ -83,7 +82,7 @@ router.get("/getAllMessages", async (req, res) => {
     // Fetch all messages from the database
     const messages = await MessageModel.find({});
 
-    res.status(200).json(messages); // Return all messages as JSON response
+    res.status(200).json(messages);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
